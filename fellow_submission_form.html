@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Attendance Submission - Teach for Kenya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .form-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .day-column {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .day-header {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .attendance-input {
+            margin: 10px 0;
+        }
+
+        .attendance-input input {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #dc3545;
+            display: none;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .attendance-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Weekly Attendance Submission</h1>
+            <p>Teach for Kenya Fellowship Program</p>
+        </div>
+
+        <div class="form-container">
+            <form id="attendanceForm">
+                <!-- Fellow Information -->
+                <div class="form-section">
+                    <h3>👤 Fellow Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="fellowName">Your Name <span class="required">*</span></label>
+                        <select id="fellowName" required>
+                            <option value="">Select your name</option>
+                            <option value="Stacy Akinyi">Stacy Akinyi</option>
+                            <option value="Eugene Ngure">Eugene Ngure</option>
+                            <option value="Solomon Irungu">Solomon Irungu</option>
+                            <option value="Noel Law">Noel Law</option>
+                            <option value="Doncalos Onyango">Doncalos Onyango</option>
+                            <option value="Nancy Akinyi Kaunda">Nancy Akinyi Kaunda</option>
+                            <option value="Jeremiah Oduor">Jeremiah Oduor</option>
+                            <option value="Shambach Sikuku">Shambach Sikuku</option>
+                            <option value="Robert Lawi">Robert Lawi</option>
+                            <option value="Fiona Maizs">Fiona Maizs</option>
+                            <!-- Add all 197 fellows here - truncated for space -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="region">Region <span class="required">*</span></label>
+                        <select id="region" required>
+                            <option value="">Select Region</option>
+                            <option value="Nairobi">Nairobi</option>
+                            <option value="Machakos">Machakos</option>
+                            <option value="Kisumu">Kisumu</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="schoolName">School Name <span class="required">*</span></label>
+                        <select id="schoolName" required>
+                            <option value="">Select School</option>
+                            <option value="AEF Reuben ECDE Centre">AEF Reuben ECDE Centre</option>
+                            <option value="AEF Reuben Primary School">AEF Reuben Primary School</option>
+                            <option value="Arina Primary School">Arina Primary School</option>
+                            <!-- Add all schools here - truncated for space -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gradeClass">Grade/Class <span class="required">*</span></label>
+                        <select id="gradeClass" required>
+                            <option value="">Select Grade/Class</option>
+                            <option value="Play Group">Play Group</option>
+                            <option value="PP1">PP1</option>
+                            <option value="PP2">PP2</option>
+                            <option value="Grade 1">Grade 1</option>
+                            <option value="Grade 2">Grade 2</option>
+                            <option value="Grade 3">Grade 3</option>
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                            <option value="Grade 9">Grade 9</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weekDate">Week Starting (Monday) <span class="required">*</span></label>
+                        <input type="date" id="weekDate" required>
+                    </div>
+                </div>
+
+                <!-- Daily Attendance -->
+                <div class="form-section">
+                    <h3>📊 Daily Attendance (Monday - Friday)</h3>
+                    <p style="margin-bottom: 20px; color: #666;">Enter the number of students present each day</p>
+                    
+                    <div class="attendance-grid">
+                        <div class="day-column">
+                            <div class="day-header">Monday</div>
+                            <div class="attendance-input">
+                                <label>Male Students</label>
+                                <input type="number" id="mondayMale" min="0" value="0" required>
+                            </div>
+                            <div class="attendance-input">
+                                <label>Female Students</label>
+                                <input type="number" id="mondayFemale" min="0" value="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="day-column">
+                            <div class="day-header">Tuesday</div>
+                            <div class="attendance-input">
+                                <label>Male Students</label>
+                                <input type="number" id="tuesdayMale" min="0" value="0" required>
+                            </div>
+                            <div class="attendance-input">
+                                <label>Female Students</label>
+                                <input type="number" id="tuesdayFemale" min="0" value="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="day-column">
+                            <div class="day-header">Wednesday</div>
+                            <div class="attendance-input">
+                                <label>Male Students</label>
+                                <input type="number" id="wednesdayMale" min="0" value="0" required>
+                            </div>
+                            <div class="attendance-input">
+                                <label>Female Students</label>
+                                <input type="number" id="wednesdayFemale" min="0" value="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="day-column">
+                            <div class="day-header">Thursday</div>
+                            <div class="attendance-input">
+                                <label>Male Students</label>
+                                <input type="number" id="thursdayMale" min="0" value="0" required>
+                            </div>
+                            <div class="attendance-input">
+                                <label>Female Students</label>
+                                <input type="number" id="thursdayFemale" min="0" value="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="day-column">
+                            <div class="day-header">Friday</div>
+                            <div class="attendance-input">
+                                <label>Male Students</label>
+                                <input type="number" id="fridayMale" min="0" value="0" required>
+                            </div>
+                            <div class="attendance-input">
+                                <label>Female Students</label>
+                                <input type="number" id="fridayFemale" min="0" value="0" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enrollment Data -->
+                <div class="form-section">
+                    <h3>📈 Enrollment Changes This Week</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div class="form-group">
+                            <label for="totalMaleEnrolled">Total Male Students Enrolled</label>
+                            <input type="number" id="totalMaleEnrolled" min="0" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="totalFemaleEnrolled">Total Female Students Enrolled</label>
+                            <input type="number" id="totalFemaleEnrolled" min="0" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newEnrollments">New Enrollments This Week</label>
+                            <input type="number" id="newEnrollments" min="0" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dropoutsTransfers">Dropouts/Transfers This Week</label>
+                            <input type="number" id="dropoutsTransfers" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Special Circumstances -->
+                <div class="form-section">
+                    <h3>⚠️ Special Circumstances This Week</h3>
+                    <p style="margin-bottom: 15px; color: #666;">Select any circumstances that affected attendance:</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="noCircumstances" name="circumstances">
+                            <label for="noCircumstances">No special circumstances</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="schoolEvent" name="circumstances">
+                            <label for="schoolEvent">School event/field trip</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="weatherAbsences" name="circumstances">
+                            <label for="weatherAbsences">Weather-related absences</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="illnessOutbreak" name="circumstances">
+                            <label for="illnessOutbreak">Illness outbreak</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="otherCircumstances" name="circumstances">
+                            <label for="otherCircumstances">Other (specify below)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="otherDetails">If other, please specify:</label>
+                        <textarea id="otherDetails" rows="3" placeholder="Describe any other circumstances..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Additional Comments -->
+                <div class="form-section">
+                    <h3>💬 Additional Comments</h3>
+                    <div class="form-group">
+                        <label for="additionalComments">Any additional observations or comments:</label>
+                        <textarea id="additionalComments" rows="4" placeholder="Share any observations about student engagement, challenges, successes, etc."></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn">📤 Submit Weekly Attendance Report</button>
+                
+                <!-- Success/Error Messages -->
+                <div id="successMessage" class="success-message">
+                    <h4>✅ Report Submitted Successfully!</h4>
+                    <p>Thank you for submitting your weekly attendance report. The data has been recorded and will be included in this week's summary.</p>
+                </div>
+                
+                <div id="errorMessage" class="error-message">
+                    <h4>❌ Submission Failed</h4>
+                    <p id="errorText">Please check your internet connection and try again. If the problem persists, contact Joakim.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Set current week's Monday as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const monday = new Date(today.setDate(today.getDate() - today.getDay() + 1));
+            document.getElementById('weekDate').value = monday.toISOString().split('T')[0];
+        });
+
+        // Handle form submission
+        document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⏳ Submitting...';
+            submitBtn.disabled = true;
+            
+            // Collect form data
+            const formData = {
+                fellowName: document.getElementById('fellowName').value,
+                region: document.getElementById('region').value,
+                schoolName: document.getElementById('schoolName').value,
+                gradeClass: document.getElementById('gradeClass').value,
+                weekDate: document.getElementById('weekDate').value,
+                attendance: {
+                    monday: {
+                        male: parseInt(document.getElementById('mondayMale').value) || 0,
+                        female: parseInt(document.getElementById('mondayFemale').value) || 0
+                    },
+                    tuesday: {
+                        male: parseInt(document.getElementById('tuesdayMale').value) || 0,
+                        female: parseInt(document.getElementById('tuesdayFemale').value) || 0
+                    },
+                    wednesday: {
+                        male: parseInt(document.getElementById('wednesdayMale').value) || 0,
+                        female: parseInt(document.getElementById('wednesdayFemale').value) || 0
+                    },
+                    thursday: {
+                        male: parseInt(document.getElementById('thursdayMale').value) || 0,
+                        female: parseInt(document.getElementById('thursdayFemale').value) || 0
+                    },
+                    friday: {
+                        male: parseInt(document.getElementById('fridayMale').value) || 0,
+                        female: parseInt(document.getElementById('fridayFemale').value) || 0
+                    }
+                },
+                enrollment: {
+                    totalMale: parseInt(document.getElementById('totalMaleEnrolled').value) || 0,
+                    totalFemale: parseInt(document.getElementById('totalFemaleEnrolled').value) || 0,
+                    newEnrollments: parseInt(document.getElementById('newEnrollments').value) || 0,
+                    dropoutsTransfers: parseInt(document.getElementById('dropoutsTransfers').value) || 0
+                },
+                circumstances: getSelectedCircumstances(),
+                otherDetails: document.getElementById('otherDetails').value,
+                additionalComments: document.getElementById('additionalComments').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Simulate submission (replace with actual API call)
+            setTimeout(() => {
+                // For now, just save to localStorage and show success
+                saveToLocalStorage(formData);
+                showSuccessMessage();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        function getSelectedCircumstances() {
+            const checkboxes = document.querySelectorAll('input[name="circumstances"]:checked');
+            return Array.from(checkboxes).map(cb => cb.nextElementSibling.textContent);
+        }
+
+        function saveToLocalStorage(data) {
+            // Save submission locally (in real system, this would go to your database)
+            const submissions = JSON.parse(localStorage.getItem('attendanceSubmissions') || '[]');
+            submissions.push(data);
+            localStorage.setItem('attendanceSubmissions', JSON.stringify(submissions));
+        }
+
+        function showSuccessMessage() {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 10000);
+        }
+
+        function showErrorMessage(errorText) {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorText').textContent = errorText;
+            
+            // Scroll to error message
+            document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
